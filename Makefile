@@ -24,8 +24,8 @@
 .PHONY: all clean
 
 # Define required raylib variables
-PROJECT_NAME       ?= game
-RAYLIB_VERSION     ?= 3.0.0
+PROJECT_NAME       ?= ZeldaClone++
+RAYLIB_VERSION     ?= 3.8.0
 RAYLIB_API_VERSION ?= 300
 RAYLIB_PATH        ?= ..\..
 

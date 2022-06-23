@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "include/Animator.h"
+#include "include/InputManager.h"
 
 int windowsDimensions[2]{768, 704};
 const char* MAP_TEXTURE_PATH = "src/resources/maps/map_01.png";
@@ -8,6 +9,8 @@ Animator SpriteAnimator{"LinkAnimator", 4, 3, 10};
 
 int main()
 {
+    InputManager& InputManagerInstance = InputManager::GetManager();
+
     InitWindow(windowsDimensions[0], windowsDimensions[1], "Zelda Clone Game");
 
     Texture2D map = LoadTexture(MAP_TEXTURE_PATH);
@@ -25,6 +28,8 @@ int main()
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
+        InputManagerInstance.UpdateInput();
+
         BeginDrawing();
         ClearBackground(BLACK);
 

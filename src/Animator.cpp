@@ -136,8 +136,6 @@ void Animator::GoToColumn(const unsigned int ColumnNumber)
 void Animator::GoToFirstRow()
 {
 	GoToRow(0);
-
-	// Update time remaining
 	TimeRemainingFramesCounter = float(GetTotalTimeInFrames()) - CurrentColumn;
 }
 
@@ -147,7 +145,6 @@ void Animator::GoToFirstColumn()
 	{
 		GoToColumn(0);
 
-		// Update time remaining
 		bContinuous ? TimeRemainingFramesCounter = float(GetTotalTimeInFrames()) - Columns*CurrentRow : TimeRemainingFramesCounter = float(Columns);
 	}
 	else
@@ -161,7 +158,6 @@ void Animator::GoToLastRow()
 {
 	GoToRow(Rows - 1);
 
-	// Update time remaining
 	bContinuous ? TimeRemainingFramesCounter = float(GetTotalTimeInFrames()) - CurrentColumn - Columns*(Rows-1) : TimeRemainingFramesCounter = float(Columns - CurrentColumn);
 }
 
@@ -171,7 +167,6 @@ void Animator::GoToLastColumn()
 	{
 		GoToColumn(Columns - 1);
 
-		// Update time remaining
 		if (bContinuous)
 		{
 			if (!bReverse)
@@ -199,7 +194,6 @@ void Animator::GoToLastColumn()
 
 void Animator::GoToFrame(const unsigned int FrameNumber)
 {
-	// Does frame exist in sprite-sheet
 	if (FrameNumber < Columns * Rows)
 	{
 		GoToRow(FrameNumber / Columns);
@@ -233,7 +227,6 @@ void Animator::GoToLastFrameOfSpriteSheet()
 
 void Animator::NextFrame()
 {
-	// Only increment when animation is playing
 	if (!bIsAnimationFinished)
 	{
 		CurrentFrame++;
@@ -242,16 +235,13 @@ void Animator::NextFrame()
 
 	if (bCanLoop)
 	{
-		// Are we over the max columns
 		if (CurrentFrame > Columns - 1)
 		{
-			// If we are continuous, Go to the next row in the sprite-sheet
 			if (bContinuous)
 			{
 				NextRow();
 				GoToFirstColumn();
 			}
-			// Otherwise, Go back to the start
 			else
 			{
 				GoToFirstColumn();
@@ -260,17 +250,13 @@ void Animator::NextFrame()
 	}
 	else
 	{
-		// Are we over the max columns
 		if (CurrentFrame > Columns - 1)
 		{
-			// If we are continuous, Go to the next row in the sprite-sheet
 			if (bContinuous)
 			{
-				// Clamp values back down
 				CurrentFrame = Columns - 1;
 				CurrentColumn = Columns - 1;
 
-				// Go to next row if we are not at the last frame
 				if (!IsAtLastFrame())
 				{
 					NextRow();
@@ -280,7 +266,6 @@ void Animator::NextFrame()
 					bIsAnimationFinished = true;
 				
 			}
-			// Otherwise, Stay at the end
 			else
 			{
 				bIsAnimationFinished = true;
@@ -292,7 +277,6 @@ void Animator::NextFrame()
 
 void Animator::PreviousFrame()
 {
-	// Only decrement when animation is playing
 	if (!bIsAnimationFinished)
 	{
 		CurrentFrame--;
@@ -301,16 +285,13 @@ void Animator::PreviousFrame()
 
 	if (bCanLoop)
 	{
-		// Are we over the max columns OR equal to zero
 		if (CurrentFrame == 0 || CurrentFrame > Columns)
 		{
-			// If we are continuous, Go to the previous row in the sprite-sheet
 			if (bContinuous)
 			{
 				PreviousRow();
 				GoToLastColumn();
 			}
-			// Otherwise, Go back to the last column
 			else
 			{
 				GoToLastColumn();
@@ -319,17 +300,13 @@ void Animator::PreviousFrame()
 	}
 	else
 	{
-		// Are we over the max columns OR equal to zero
 		if (CurrentFrame == 0 || CurrentFrame > Columns)
 		{
-			// If we are continuous, Go to the previous row in the sprite-sheet
 			if (bContinuous)
 			{
-				// Clamp values back down
 				CurrentFrame = 0;
 				CurrentColumn = 0;
 
-				// Go to previous row if we are not at the first frame
 				if (!IsAtFirstFrame())
 				{
 					PreviousRow();
@@ -338,7 +315,6 @@ void Animator::PreviousFrame()
 				else
 					bIsAnimationFinished = true;
 			}
-			// Otherwise, Stay at the start
 			else
 			{
 				bIsAnimationFinished = true;
@@ -359,13 +335,11 @@ void Animator::NextRow()
 
 	if (FrameRec.y >= Sprite.height)
 	{
-		// Go to start
 		if (bCanLoop)
 		{
 			FrameRec.y = 0;
 			CurrentRow = 0;
 		}
-		// Stay at end
 		else
 		{
 			FrameRec.y = float(Sprite.height);
@@ -377,7 +351,6 @@ void Animator::NextRow()
 	else
 		CurrentRow++;
 
-	// Update the time remaining
 	TimeRemainingFramesCounter = GetTotalTimeInFrames() - (float(GetTotalTimeInFrames()) / Rows) * CurrentRow;
 }
 
@@ -394,7 +367,6 @@ void Animator::PreviousRow()
 	else
 		CurrentRow--;
 
-	// Update the time remaining
 	if (!bReverse)
 		TimeRemainingFramesCounter = GetTotalTimeInFrames() - (float(GetTotalTimeInFrames()) / Rows) * CurrentRow;
 }
@@ -411,7 +383,6 @@ void Animator::NextColumn()
 	else
 		CurrentColumn++;
 
-	// Update the time remaining
 	TimeRemainingFramesCounter -= 1;
 }
 
@@ -427,7 +398,6 @@ void Animator::PreviousColumn()
 	else
 		CurrentColumn--;
 
-	// Update the time remaining
 	TimeRemainingFramesCounter += 1;
 }
 
@@ -530,29 +500,22 @@ void Animator::Play()
 	{
 		PlaybackPosition++;
 
-		// Update the time remaining
 		if (!bIsAnimationFinished)
 			CountdownInFrames();
 
-		// Has 'X' amount of frames passed?
 		if (PlaybackPosition > GetFPS() / Framerate)
 		{
-			// Reset playback position
 			PlaybackPosition = 0;
 
-			// Go to previous frame when reversing
 			if (bReverse)
 				PreviousFrame();
-			// Go to next frame if not reversing
 			else
 				NextFrame();
 		}
 
-		// Only go to next frame if animation has not finished playing
 		if (!bIsAnimationFinished)
 			FrameRec.x = float(CurrentFrame)*FrameWidth;
 
-		//printf("Row: %u, Column: %u\n", CurrentRow, CurrentColumn);
 		bHasStartedPlaying = false;
 	}
 }
@@ -620,7 +583,6 @@ void Animator::SetFramerate(const unsigned int NewFramerate)
 
 bool Animator::IsAtFrame(const unsigned int FrameNumber) const
 {
-	// Does frame exist in sprite-sheet
 	if (FrameNumber < Columns * Rows)
 	{
 		const unsigned int RowFrameNumberIsOn = FrameNumber / Columns;

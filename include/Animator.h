@@ -1,7 +1,6 @@
 #pragma once
 #include "raylib.h"
 
-// Animator for Raylib is a simple tool used to animate sprite-sheets.
 class Animator
 {
 public:

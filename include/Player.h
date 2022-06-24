@@ -1,6 +1,12 @@
 #pragma once
 #include "include/InputManager.h"
 
+enum PlayerState
+{
+    IDLE,
+    RUN
+};
+
 class Player
 {
 public:
@@ -11,4 +17,6 @@ public:
 
 private:
     void Move(InputManager& InputManagerInst);
+    void Draw();
+    void ChangeSpriteViewDirection(Input Direction);
 };

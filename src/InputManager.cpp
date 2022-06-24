@@ -35,6 +35,18 @@ bool InputManager::GetInput(Input keyToCheck)
     return input.at(keyToCheck);
 }
 
+bool InputManager::AnyKey()
+{
+    for (int i =0; i < Input::TOTAL; i++)
+    {
+        if(input.at((Input)i) == true)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void InputManager::UpdateInput()
 {
     for(int i =0; i < Input::TOTAL; i++)

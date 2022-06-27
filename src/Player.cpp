@@ -106,9 +106,9 @@ void Player::Draw()
     }
 
 
-    //Rectangle source{0.f, 0.f, rightleft * (float)SpriteAnimator.GetSprite().width/ 4, (float)link.height / 3};
+    Rectangle source{SpriteAnimator.GetCurrentFrame() * SpriteAnimator.GetFrameRec().x, SpriteAnimator.GetFrameRec().y, rightleft * SpriteAnimator.GetFrameRec().width, SpriteAnimator.GetFrameRec().height};
     Rectangle linkDest{linkPos.x, linkPos.y, 1.5 * SpriteAnimator.GetFrameRec().width, 1.5 * SpriteAnimator.GetFrameRec().height};
-    DrawTexturePro(SpriteAnimator.GetSprite(), SpriteAnimator.GetFrameRec(), linkDest, Vector2{}, 0.0f, WHITE);
+    DrawTexturePro(SpriteAnimator.GetSprite(), source, linkDest, Vector2{}, 0.0f, WHITE);
     SpriteAnimator.Play();
 }
 

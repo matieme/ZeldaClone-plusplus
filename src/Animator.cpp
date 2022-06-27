@@ -52,6 +52,7 @@ void Animator::ChangeSprite(const Texture2D& NewSprite, const unsigned int NumOf
 
 void Animator::FlipSprite(const bool bHorizontalFlip, const bool bVerticalFlip)
 {
+
 	//FrameRec.width = fabsf(FrameRec.width) * (bHorizontalFlip ? -1 : 1);
 	//FrameRec.height = fabsf(FrameRec.height) * (bVerticalFlip ? -1 : 1);
 
@@ -73,6 +74,7 @@ void Animator::FlipSprite(const bool bHorizontalFlip, const bool bVerticalFlip)
 	}
 
 	printf("Width: %f, Height: %f\n", FrameRec.width, FrameRec.height);
+	
 }
 
 void Animator::SetLooping(const bool bLooping)

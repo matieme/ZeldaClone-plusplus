@@ -3,22 +3,31 @@
 #include "raymath.h"
 #include "include/Animator.h"
 #include "include/InputManager.h"
+#include <cstdio>
 
-Animator SpriteAnimator{"LinkAnimator", 4, 3, 10};
+
+Animator SpriteAnimator{"LinkAnimator", 8, 3, 2};
 const char* LINK_IDLE_TEXTURE_PATH = "src/resources/spritesheets/character_link_idle.png";
 const char* LINK_RUNNING_TEXTURE_PATH = "src/resources/spritesheets/character_link_running.png";
 
 Vector2 linkPos{0.0, 0.0};
 Texture2D link;
+Texture2D link_idle;
+Texture2D link_run;
+
 Input playerView = Input::UP;
 PlayerState playerState = PlayerState::IDLE;
 
-float rightleft = 0.0f;
+float rightleft = 1.0f;
 
 Player::Player()
 {
-    link = LoadTexture(LINK_IDLE_TEXTURE_PATH);
-    SpriteAnimator.AssignSprite(link);
+    link_idle = LoadTexture(LINK_IDLE_TEXTURE_PATH);
+    link_run = LoadTexture(LINK_RUNNING_TEXTURE_PATH);
+    link = link_idle;
+
+    ChangeSpriteViewDirection(Input::UP);
+    SpriteAnimator.ChangeSprite(link, 8, 3, 2);
 
     linkPos.x = GetScreenWidth() / 2.0f - (0.5f * link.width / 4.0f);
     linkPos.y = GetScreenHeight() / 2.0f - (0.5f * link.height / 3.0f);
@@ -66,43 +75,50 @@ void Player::Move(InputManager& InputManagerInst)
     if(Vector2Length(direction) != 0.0)
     {
         linkPos = Vector2Subtract(linkPos, Vector2Normalize(direction));
+        playerState = PlayerState::RUN;
+    }else
+    {
+        playerState = PlayerState::IDLE;
     }
 }
 
 void Player::Draw()
 {
-    /*
     switch (playerState)
     {
-    case LinkState::IDLE:
-        link = LoadTexture(LINK_IDLE_TEXTURE_PATH);
-        SpriteAnimator.ChangeSprite(link, 4, 3, 10);
-        break;
-    case LinkState::RUN:
-        link = LoadTexture(LINK_RUNNING_TEXTURE_PATH);
-        SpriteAnimator.ChangeSprite(link, 6, 3, 10);
-    default:
-        break;
+        case PlayerState::IDLE:
+            if(link.id != link_idle.id)
+            {
+                link = link_idle;
+                SpriteAnimator.ChangeSprite(link, 8, 3, 2);
+            }
+            break;
+        case PlayerState::RUN:
+            if(link.id != link_run.id)
+            {
+                link = link_run;
+                SpriteAnimator.ChangeSprite(link, 6, 3, 5);
+            }
+        default:
+            break;
     }
-    */
-
 
     switch (playerView)
     {
-    case Input::UP:
-        SpriteAnimator.GoToRow(2);
-        break;
-    case Input::DOWN:
-        SpriteAnimator.GoToRow(0);
-        break;
-    case Input::LEFT:
-        SpriteAnimator.GoToRow(1);
-        rightleft = -1.f;
-        break;
-    case Input::RIGHT:
-        SpriteAnimator.GoToRow(1);
-        rightleft = 1.f;
-        break;
+        case Input::UP:
+            SpriteAnimator.GoToRow(2);
+            break;
+        case Input::DOWN:
+            SpriteAnimator.GoToRow(0);
+            break;
+        case Input::LEFT:
+            SpriteAnimator.GoToRow(1);
+            rightleft = -1.f;
+            break;
+        case Input::RIGHT:
+            SpriteAnimator.GoToRow(1);
+            rightleft = 1.f;
+            break;
     }
 
 

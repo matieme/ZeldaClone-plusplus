@@ -3,8 +3,6 @@
 #include "raymath.h"
 #include "include/Animator.h"
 #include "include/InputManager.h"
-#include <cstdio>
-
 
 Animator SpriteAnimator{"LinkAnimator", 8, 3, 2};
 const char* LINK_IDLE_TEXTURE_PATH = "src/resources/spritesheets/character_link_idle.png";
@@ -54,18 +52,18 @@ void Player::Move(InputManager& InputManagerInst)
         {
             direction.x += 1.0;
             ChangeSpriteViewDirection(Input::LEFT);
-        } 
-        if(InputManagerInst.GetInput(Input::RIGHT))
+        }
+        else if(InputManagerInst.GetInput(Input::RIGHT))
         {
             direction.x -= 1.0;
             ChangeSpriteViewDirection(Input::RIGHT);
-        } 
-        if(InputManagerInst.GetInput(Input::UP))
+        }
+        else if(InputManagerInst.GetInput(Input::UP))
         {
             direction.y += 1.0;
             ChangeSpriteViewDirection(Input::UP);
         }
-        if(InputManagerInst.GetInput(Input::DOWN))
+        else if(InputManagerInst.GetInput(Input::DOWN))
         {
             direction.y -= 1.0;
             ChangeSpriteViewDirection(Input::DOWN);
@@ -74,7 +72,7 @@ void Player::Move(InputManager& InputManagerInst)
 
     if(Vector2Length(direction) != 0.0)
     {
-        linkPos = Vector2Subtract(linkPos, Vector2Normalize(direction));
+        linkPos = Vector2Subtract(linkPos, Vector2Scale(Vector2Normalize(direction), Speed));
         playerState = PlayerState::RUN;
     }else
     {

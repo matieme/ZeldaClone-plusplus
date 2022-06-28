@@ -19,4 +19,5 @@ private:
     void Move(InputManager& InputManagerInst);
     void Draw();
     void ChangeSpriteViewDirection(Input Direction);
+    float Speed{1.7};
 };

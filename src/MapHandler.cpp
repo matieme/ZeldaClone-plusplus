@@ -1,41 +1,35 @@
 #include <iostream>
 #include <cmath>
 #include "include/MapHandler.h"
+
+const char* MAPS_PATH = "src/resources/maps/";
  
 MapHandler::MapHandler(std::string file) 
 {
     tson::Tileson parser;
     map = parser.parse(fs::path(file));
 
-    if (map.getStatus() == tson::ParseStatus::OK) {
+    if (map.getStatus() == tson::ParseStatus::OK) 
+    {
 
         for (auto &tileset : map.getTilesets()) 
         {
-            const char* test = "src/resources/maps/Map_01.png"; //("src/resources/maps/" + tileset.getImage().string()).c_str();
-            map_tex = LoadTexture(test);
-            //map_tex = LoadTexture(fs::path("resources/maps/" + tileset.getImage().string()).c_str());
+            std::string TilesetImageFileName = tileset.getImage().string();
+            const char* TilesetImageFileNameConst = TilesetImageFileName.c_str();
+            
+            char buffer[128];
+            strncpy(buffer, MAPS_PATH, sizeof(buffer));
+            strncat(buffer, TilesetImageFileNameConst, sizeof(buffer));
+            const char* MapFileFullPath = buffer;
+            
+            map_tex = LoadTexture(MapFileFullPath);
             map_tileset = &tileset;
         }
-
-/*
-        auto objs = map.getLayer("Objetos");
-        tson::Object *player = objs->firstObj("player");
-        player_init_pos.x = player->getPosition().x;
-        player_init_pos.y = player->getPosition().y;
-
-        std::cout << "Vida: " << player->get<int>("Vida") << std::endl;
-
-        for (auto &obj : objs->getObjects()) {
-            //Just iterate through all the objects
-            std::cout << "Nombre: " << obj.getName() << std::endl;
-            std::cout << "   Pos: " << obj.getPosition().x << std::endl;
-        }
-        */
     }
 
 }
 
-void MapHandler::dibujar() 
+void MapHandler::DrawMap() 
 {
     Rectangle tile_rec;
     tile_rec.x = 0.0f;
@@ -43,23 +37,18 @@ void MapHandler::dibujar()
     tile_rec.width = map.getTileSize().x;
     tile_rec.height = map.getTileSize().y;
 
-    int firstId = map_tileset->getFirstgid(); //First tile id of the tileset
-    int columns = map_tileset->getColumns(); //For the demo map it is 8.
+    int firstId = map_tileset->getFirstgid();
+    int columns = map_tileset->getColumns();
     int margin = map_tileset->getMargin();
     int space = map_tileset->getSpacing();
-
-
-    auto &c = map.getBackgroundColor();
-    ClearBackground({c.r, c.g, c.b, c.a}); // Limpio la pantalla con blanco
 
     for (auto nombre: {"Background"}) 
     {
         auto *layer = map.getLayer(nombre);
-        for (auto&[pos, tile] : layer->getTileData()) //Loops through absolutely all existing tiles
+        for (auto&[pos, tile] : layer->getTileData())
         {
-            //Must check for nullptr, due to how we got the first invalid tile (pos: 0, 4)
-            //Would be unnecessary otherwise.
-            if (tile != nullptr) {
+            if (tile != nullptr) 
+            {
                 Vector2 position = {(float) std::get<0>(pos) * map.getTileSize().x,
                                            (float) std::get<1>(pos) * map.getTileSize().y};
 

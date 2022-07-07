@@ -3,12 +3,13 @@
 #include "include/InputManager.h"
 #include "include/MapHandler.h"
 
-int windowsDimensions[2]{768, 704};
+int windowsDimensions[2]{512, 448};
 MapHandler *Map;
 
 int main()
 {
     InputManager& InputManagerInstance = InputManager::GetManager();
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(windowsDimensions[0], windowsDimensions[1], "Zelda Clone Game");
 
     Map = new MapHandler("src/resources/maps/Map_01.json");
@@ -22,9 +23,6 @@ int main()
         BeginDrawing();
         ClearBackground(BLACK);
 
-        float mapTextureScaleMultiplier = 1.5;
-        //Vector2 mapPos{0.0, windowsDimensions[1] - (map.height * mapTextureScaleMultiplier)};
-        //DrawTextureEx(map, mapPos, 0.0, mapTextureScaleMultiplier, WHITE);
         Map->DrawMap();
         link.Update(InputManagerInstance);
 

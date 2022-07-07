@@ -3,7 +3,8 @@
 #include "include/MapHandler.h"
 
 const char* MAPS_PATH = "src/resources/maps/";
- 
+const int MAP_OFFSET = 100; 
+
 MapHandler::MapHandler(std::string file) 
 {
     tson::Tileson parser;
@@ -11,7 +12,6 @@ MapHandler::MapHandler(std::string file)
 
     if (map.getStatus() == tson::ParseStatus::OK) 
     {
-
         for (auto &tileset : map.getTilesets()) 
         {
             std::string TilesetImageFileName = tileset.getImage().string();
@@ -50,7 +50,7 @@ void MapHandler::DrawMap()
             if (tile != nullptr) 
             {
                 Vector2 position = {(float) std::get<0>(pos) * map.getTileSize().x,
-                                           (float) std::get<1>(pos) * map.getTileSize().y};
+                                           (float) std::get<1>(pos) * map.getTileSize().y + MAP_OFFSET};
 
                 int baseTilePosition = (tile->getId() - firstId);
 
@@ -62,7 +62,6 @@ void MapHandler::DrawMap()
                 tile_rec.x = offsetX;
                 tile_rec.y = offsetY;
                 DrawTextureRec(map_tex, tile_rec, position, WHITE);
-
             }
         }
     }

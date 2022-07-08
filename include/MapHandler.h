@@ -4,11 +4,16 @@
 
 class MapHandler 
 {
-    tson::Map map;
-    Texture2D map_tex;
-    tson::Tileset *map_tileset;
-
 public:
     MapHandler(std::string file);
     void DrawMap();
+    void GenerateColliders();
+    std::vector<Rectangle> GetMapColliderRec();
+    void DrawColliderRectDebug();
+
+private:
+    tson::Map map;
+    Texture2D map_tex;
+    tson::Tileset *map_tileset;
+    std::vector<Rectangle> CollidersRecs;
 };

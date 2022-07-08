@@ -2,7 +2,6 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "include/Animator.h"
-#include "include/InputManager.h"
 
 Animator SpriteAnimator{"LinkAnimator", 8, 3, 2};
 const char* LINK_IDLE_TEXTURE_PATH = "src/resources/spritesheets/character_link_idle.png";
@@ -50,23 +49,39 @@ void Player::Move(InputManager& InputManagerInst)
     {
         if(InputManagerInst.GetInput(Input::LEFT))
         {
-            direction.x += 1.0;
             ChangeSpriteViewDirection(Input::LEFT);
+
+            if(!CheckMapColliders())
+            {
+                direction.x += 1.0;
+            }
         }
         else if(InputManagerInst.GetInput(Input::RIGHT))
         {
-            direction.x -= 1.0;
             ChangeSpriteViewDirection(Input::RIGHT);
+
+            if(!CheckMapColliders())
+            {
+                direction.x -= 1.0;
+            }
         }
         else if(InputManagerInst.GetInput(Input::UP))
         {
-            direction.y += 1.0;
             ChangeSpriteViewDirection(Input::UP);
+
+            if(!CheckMapColliders())
+            {
+                direction.y += 1.0;
+            }
         }
         else if(InputManagerInst.GetInput(Input::DOWN))
         {
-            direction.y -= 1.0;
             ChangeSpriteViewDirection(Input::DOWN);
+
+            if(!CheckMapColliders())
+            {
+                direction.y -= 1.0;
+            }
         }
     }
 
@@ -119,10 +134,19 @@ void Player::Draw()
             break;
     }
 
+    //DrawPlayerCollider(playerView);
 
     Rectangle source{SpriteAnimator.GetCurrentFrame() * SpriteAnimator.GetFrameRec().x, SpriteAnimator.GetFrameRec().y, rightleft * SpriteAnimator.GetFrameRec().width, SpriteAnimator.GetFrameRec().height};
-    Rectangle linkDest{linkPos.x, linkPos.y, SpriteAnimator.GetFrameRec().width, SpriteAnimator.GetFrameRec().height};
-    DrawTexturePro(SpriteAnimator.GetSprite(), source, linkDest, Vector2{}, 0.0f, WHITE);
+
+    LinkRect.x = linkPos.x;
+    LinkRect.y = linkPos.y;
+    LinkRect.width = SpriteAnimator.GetFrameRec().width;
+    LinkRect.height = SpriteAnimator.GetFrameRec().height;
+    
+    DrawRectangle(LinkRect.x, LinkRect.y, LinkRect.width, LinkRect.height, BLUE);
+    DrawRectangle(LinkRectCollider.x, LinkRectCollider.y, LinkRectCollider.width, LinkRectCollider.height, GREEN);
+
+    DrawTexturePro(SpriteAnimator.GetSprite(), source, LinkRect, Vector2{}, 0.0f, WHITE);
     SpriteAnimator.Play();
 }
 
@@ -134,4 +158,49 @@ void Player::Destroy()
 void Player::ChangeSpriteViewDirection(Input Direction)
 {
     playerView = Direction;
+    DrawPlayerCollider(Direction);
+}
+
+bool Player::CheckMapColliders()
+{
+    for(Rectangle rect : LevelManagerInstance.GetCollidersRec())
+    {
+        if(CheckCollisionRecs(rect, LinkRectCollider))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void Player::DrawPlayerCollider(Input Direction)
+{
+    switch (Direction)
+    {
+        case Input::UP:
+            LinkRectCollider.x = linkPos.x;
+            LinkRectCollider.y = linkPos.y;
+            LinkRectCollider.width = LinkRect.width;
+            LinkRectCollider.height = LinkRect.height / 3;
+            break;
+        case Input::DOWN:
+            LinkRectCollider.x = linkPos.x;
+            LinkRectCollider.y = linkPos.y + LinkRect.width;
+            LinkRectCollider.width = LinkRect.width;
+            LinkRectCollider.height = LinkRect.height / 3;
+            break;
+        case Input::LEFT:
+            LinkRectCollider.x = linkPos.x;
+            LinkRectCollider.y = linkPos.y;
+            LinkRectCollider.width = LinkRect.width / 3;
+            LinkRectCollider.height = LinkRect.height;
+            break;
+        case Input::RIGHT:
+            LinkRectCollider.x = linkPos.x + LinkRect.width;
+            LinkRectCollider.y = linkPos.y;
+            LinkRectCollider.width = LinkRect.width / 3;
+            LinkRectCollider.height = LinkRect.height;
+            break;
+    }
 }

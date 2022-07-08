@@ -1,5 +1,6 @@
 #pragma once
 #include "include/InputManager.h"
+#include "include/LevelManager.h"
 
 enum PlayerState
 {
@@ -20,4 +21,9 @@ private:
     void Draw();
     void ChangeSpriteViewDirection(Input Direction);
     float Speed{1.7};
+    Rectangle LinkRect;
+    Rectangle LinkRectCollider;
+    bool CheckMapColliders();
+    LevelManager& LevelManagerInstance = LevelManager::GetManager();
+    void DrawPlayerCollider(Input Direction);
 };

@@ -25,6 +25,8 @@ MapHandler::MapHandler(std::string file)
             map_tex = LoadTexture(MapFileFullPath);
             map_tileset = &tileset;
         }
+        
+        GenerateColliders();
     }
 
 }
@@ -66,3 +68,34 @@ void MapHandler::DrawMap()
         }
     }
 }
+
+void MapHandler::GenerateColliders()
+{
+    auto objs = map.getLayer("Collider");
+    for (auto &obj : objs->getObjects())
+    {
+        Rectangle ColRec{
+                obj.getPosition().x,
+                obj.getPosition().y + MAP_OFFSET,
+                obj.getSize().x,
+                obj.getSize().y
+            };
+
+        CollidersRecs.push_back(ColRec);
+    }
+}
+
+void MapHandler::DrawColliderRectDebug()
+{
+    for (auto &obj : CollidersRecs)
+    {
+        DrawRectangle(obj.x, obj.y, obj.width, obj.height, RED);
+    }    
+}
+
+std::vector<Rectangle> MapHandler::GetMapColliderRec()
+{
+    return CollidersRecs;
+}
+
+

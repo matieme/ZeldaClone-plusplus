@@ -134,8 +134,6 @@ void Player::Draw()
             break;
     }
 
-    //DrawPlayerCollider(playerView);
-
     Rectangle source{SpriteAnimator.GetCurrentFrame() * SpriteAnimator.GetFrameRec().x, SpriteAnimator.GetFrameRec().y, rightleft * SpriteAnimator.GetFrameRec().width, SpriteAnimator.GetFrameRec().height};
 
     LinkRect.x = linkPos.x;
@@ -179,28 +177,28 @@ void Player::DrawPlayerCollider(Input Direction)
     switch (Direction)
     {
         case Input::UP:
-            LinkRectCollider.x = linkPos.x;
-            LinkRectCollider.y = linkPos.y;
-            LinkRectCollider.width = LinkRect.width;
-            LinkRectCollider.height = LinkRect.height / 3;
+            LinkRectCollider.width = LinkRect.width / 2;
+            LinkRectCollider.height = LinkRect.height / 4;
+            LinkRectCollider.x = (LinkRect.x + LinkRect.width / 2) - LinkRectCollider.width / 2;
+            LinkRectCollider.y = LinkRect.y;
             break;
         case Input::DOWN:
-            LinkRectCollider.x = linkPos.x;
-            LinkRectCollider.y = linkPos.y + LinkRect.width;
-            LinkRectCollider.width = LinkRect.width;
-            LinkRectCollider.height = LinkRect.height / 3;
+            LinkRectCollider.width = LinkRect.width / 2;
+            LinkRectCollider.height = LinkRect.height / 4;
+            LinkRectCollider.x = (LinkRect.x + LinkRect.width / 2) - LinkRectCollider.width / 2;
+            LinkRectCollider.y = LinkRect.y + LinkRect.width;
             break;
         case Input::LEFT:
-            LinkRectCollider.x = linkPos.x;
-            LinkRectCollider.y = linkPos.y;
-            LinkRectCollider.width = LinkRect.width / 3;
-            LinkRectCollider.height = LinkRect.height;
+            LinkRectCollider.width = LinkRect.width / 4;
+            LinkRectCollider.height = LinkRect.height / 2;
+            LinkRectCollider.x = LinkRect.x;
+            LinkRectCollider.y = (LinkRect.y + LinkRect.height / 2) - LinkRectCollider.height / 2;
             break;
         case Input::RIGHT:
-            LinkRectCollider.x = linkPos.x + LinkRect.width;
-            LinkRectCollider.y = linkPos.y;
-            LinkRectCollider.width = LinkRect.width / 3;
-            LinkRectCollider.height = LinkRect.height;
+            LinkRectCollider.width = LinkRect.width / 4;
+            LinkRectCollider.height = LinkRect.height / 2;
+            LinkRectCollider.x = (LinkRect.x + LinkRect.width) - LinkRectCollider.width;
+            LinkRectCollider.y = (LinkRect.y + LinkRect.height / 2) - LinkRectCollider.height / 2;;
             break;
     }
 }

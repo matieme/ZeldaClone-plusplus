@@ -28,6 +28,7 @@ Player::Player()
 
     linkPos.x = GetScreenWidth() / 2.0f - (0.5f * link.width / 4.0f);
     linkPos.y = GetScreenHeight() / 2.0f - (0.5f * link.height / 3.0f);
+    DrawPlayerCollider(Input::UP);
 }
 
 Player::~Player()
@@ -35,10 +36,17 @@ Player::~Player()
 
 }
 
+Player& Player::GetPlayer()
+{
+    static Player instance;
+    return instance;
+}
+
 void Player::Update(InputManager& InputManagerInst)
 {
     Move(InputManagerInst);
     Draw();
+    CheckGateMapColliders();
 }
 
 void Player::Move(InputManager& InputManagerInst)
@@ -145,7 +153,7 @@ void Player::Draw()
     //DrawRectangle(LinkRect.x, LinkRect.y, LinkRect.width, LinkRect.height, BLUE);
     
     //Colliders Debug
-    //DrawRectangle(LinkRectCollider.x, LinkRectCollider.y, LinkRectCollider.width, LinkRectCollider.height, GREEN);
+    DrawRectangle(LinkRectCollider.x, LinkRectCollider.y, LinkRectCollider.width, LinkRectCollider.height, GREEN);
 
     DrawTexturePro(SpriteAnimator.GetSprite(), source, LinkRect, Vector2{}, 0.0f, WHITE);
     SpriteAnimator.Play();
@@ -173,6 +181,17 @@ bool Player::CheckMapColliders()
     }
 
     return false;
+}
+
+void Player::CheckGateMapColliders()
+{
+    for(GateData rect : LevelManagerInstance.GetGateCollidersRec())
+    {
+        if(CheckCollisionRecs(rect.rec, LinkRectCollider))
+        {
+            printf("Toquetie la puerta %s", rect.gateID);
+        }
+    }
 }
 
 void Player::DrawPlayerCollider(Input Direction)

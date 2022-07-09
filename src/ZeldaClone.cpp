@@ -13,7 +13,7 @@ int main()
     
     LevelManager& LevelManagerInstance = LevelManager::GetManager();
 
-    Player link = Player();
+    Player link = Player::GetPlayer();
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -22,7 +22,7 @@ int main()
         BeginDrawing();
         ClearBackground(BLACK);
 
-        LevelManagerInstance.DrawCurrentMap();
+        LevelManagerInstance.Update();
 
         link.Update(InputManagerInstance);
 

@@ -11,14 +11,25 @@ LevelManager::LevelManager()
     Map = new MapHandler("src/resources/maps/Map_01.json");
 }
 
-void LevelManager::DrawCurrentMap()
+void LevelManager::Update()
 {
     Map->DrawMap();
-    //Map colliders debug
+
+    //Map colliders debug rectangles
     //Map->DrawColliderRectDebug();
 }
 
 std::vector<Rectangle> LevelManager::GetCollidersRec()
 {
-    return Map->GetMapColliderRec();   
+    return Map->GetMapColliderRec();
+}
+
+std::vector<GateData> LevelManager::GetGateCollidersRec()
+{
+    return Map->GetGatesColliderRec();
+}
+
+void LevelManager::OnGateCollision()
+{
+
 }

@@ -71,8 +71,8 @@ void MapHandler::DrawMap()
 
 void MapHandler::GenerateColliders()
 {
-    auto objs = map.getLayer("Collider");
-    for (auto &obj : objs->getObjects())
+    auto colliders = map.getLayer("Collider");
+    for (auto &obj : colliders->getObjects())
     {
         Rectangle ColRec{
                 obj.getPosition().x,
@@ -82,6 +82,18 @@ void MapHandler::GenerateColliders()
             };
 
         CollidersRecs.push_back(ColRec);
+    }
+
+    auto gates = map.getLayer("Gates");
+    for(auto &gate : gates->getObjects())
+    {
+        GateData data
+        {
+            {gate.getPosition().x, gate.getPosition().y + MAP_OFFSET, gate.getSize().x, gate.getSize().y},
+            gate.getName().c_str()
+        };
+
+        CollidersGatesRecs.push_back(data);
     }
 }
 
@@ -96,6 +108,11 @@ void MapHandler::DrawColliderRectDebug()
 std::vector<Rectangle> MapHandler::GetMapColliderRec()
 {
     return CollidersRecs;
+}
+
+std::vector<GateData> MapHandler::GetGatesColliderRec()
+{
+    return CollidersGatesRecs;
 }
 
 

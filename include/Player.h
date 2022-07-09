@@ -15,6 +15,7 @@ public:
     Player();
     ~Player();
     void Destroy();
+    static Player& GetPlayer();
 
 private:
     void Move(InputManager& InputManagerInst);
@@ -24,6 +25,7 @@ private:
     Rectangle LinkRect;
     Rectangle LinkRectCollider;
     bool CheckMapColliders();
+    void CheckGateMapColliders();
     LevelManager& LevelManagerInstance = LevelManager::GetManager();
     void DrawPlayerCollider(Input Direction);
 };

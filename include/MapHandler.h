@@ -1,6 +1,7 @@
 #include <string>
 #include <raylib.h>
 #include "libs/tileson.hpp"
+#include "include/GateData.h"
 
 class MapHandler 
 {
@@ -10,10 +11,12 @@ public:
     void GenerateColliders();
     std::vector<Rectangle> GetMapColliderRec();
     void DrawColliderRectDebug();
+    std::vector<GateData> GetGatesColliderRec();
 
 private:
     tson::Map map;
     Texture2D map_tex;
     tson::Tileset *map_tileset;
     std::vector<Rectangle> CollidersRecs;
+    std::vector<GateData> CollidersGatesRecs;
 };

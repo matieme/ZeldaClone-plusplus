@@ -14,7 +14,8 @@ LevelManager::LevelManager()
 void LevelManager::DrawCurrentMap()
 {
     Map->DrawMap();
-    Map->DrawColliderRectDebug();
+    //Map colliders debug
+    //Map->DrawColliderRectDebug();
 }
 
 std::vector<Rectangle> LevelManager::GetCollidersRec()

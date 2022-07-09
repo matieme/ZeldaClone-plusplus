@@ -141,8 +141,11 @@ void Player::Draw()
     LinkRect.width = SpriteAnimator.GetFrameRec().width;
     LinkRect.height = SpriteAnimator.GetFrameRec().height;
     
-    DrawRectangle(LinkRect.x, LinkRect.y, LinkRect.width, LinkRect.height, BLUE);
-    DrawRectangle(LinkRectCollider.x, LinkRectCollider.y, LinkRectCollider.width, LinkRectCollider.height, GREEN);
+    //Player Rectangle Debug
+    //DrawRectangle(LinkRect.x, LinkRect.y, LinkRect.width, LinkRect.height, BLUE);
+    
+    //Colliders Debug
+    //DrawRectangle(LinkRectCollider.x, LinkRectCollider.y, LinkRectCollider.width, LinkRectCollider.height, GREEN);
 
     DrawTexturePro(SpriteAnimator.GetSprite(), source, LinkRect, Vector2{}, 0.0f, WHITE);
     SpriteAnimator.Play();

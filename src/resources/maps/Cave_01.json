@@ -1,4 +1,12 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json",
+         "target":"Cave_01.json"
+        }
+    },
  "height":11,
  "infinite":false,
  "layers":[
@@ -16,16 +24,127 @@
             225, 226, 227, 228, 229, 230, 231, 232, 201, 233, 234, 236, 237, 238, 239, 240],
          "height":11,
          "id":1,
-         "name":"Tile Layer 1",
+         "name":"Background",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
          "width":16,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":2,
+         "name":"Collider",
+         "objects":[
+                {
+                 "height":61,
+                 "id":3,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":210,
+                 "x":290.666666666667,
+                 "y":291.666666666667
+                }, 
+                {
+                 "height":245.5,
+                 "id":4,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":61,
+                 "x":450.5,
+                 "y":42
+                }, 
+                {
+                 "height":35.3333333333333,
+                 "id":5,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":382.666666666667,
+                 "x":63.5,
+                 "y":4.16666666666666
+                }, 
+                {
+                 "height":252.666666666667,
+                 "id":7,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":40.6666666666667,
+                 "x":20,
+                 "y":38
+                }, 
+                {
+                 "height":58.3333333333334,
+                 "id":8,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":196.666666666667,
+                 "x":22.6666666666667,
+                 "y":291
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":4,
+         "name":"Player",
+         "objects":[
+                {
+                 "height":0,
+                 "id":9,
+                 "name":"Map_01",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":250,
+                 "y":300
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":3,
+         "name":"Gates",
+         "objects":[
+                {
+                 "height":5.66666666666669,
+                 "id":2,
+                 "name":"Map_01",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":65.6666666666667,
+                 "x":223.333333333333,
+                 "y":346.666666666667
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":2,
- "nextobjectid":1,
+ "nextlayerid":5,
+ "nextobjectid":10,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.6",

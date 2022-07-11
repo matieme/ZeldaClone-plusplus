@@ -12,6 +12,9 @@ public:
     std::vector<Rectangle> GetMapColliderRec();
     void DrawColliderRectDebug();
     std::vector<GateData> GetGatesColliderRec();
+    void CreateMap(std::string file);
+    void DestroyMapColliders();
+    Vector2 GetPlayerPositionOnMap();
 
 private:
     tson::Map map;

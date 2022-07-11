@@ -26,8 +26,7 @@ Player::Player()
     ChangeSpriteViewDirection(Input::UP);
     SpriteAnimator.ChangeSprite(link, 8, 3, 2);
 
-    linkPos.x = GetScreenWidth() / 2.0f - (0.5f * link.width / 4.0f);
-    linkPos.y = GetScreenHeight() / 2.0f - (0.5f * link.height / 3.0f);
+    linkPos = LevelManagerInstance.GetPlayerPosition();
     DrawPlayerCollider(Input::UP);
 }
 
@@ -189,7 +188,8 @@ void Player::CheckGateMapColliders()
     {
         if(CheckCollisionRecs(rect.rec, LinkRectCollider))
         {
-            printf("Toquetie la puerta %s", rect.gateID);
+            LevelManagerInstance.OnGateCollision(rect.gateID);
+            linkPos = LevelManagerInstance.GetPlayerPosition();
         }
     }
 }

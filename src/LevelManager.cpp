@@ -29,7 +29,17 @@ std::vector<GateData> LevelManager::GetGateCollidersRec()
     return Map->GetGatesColliderRec();
 }
 
-void LevelManager::OnGateCollision()
+void LevelManager::OnGateCollision(const char* MapID)
 {
+    std::string Path = "src/resources/maps/";
+    Path.append(MapID);
+    Path.append(".json");
 
+    Map->DestroyMapColliders();
+    Map->CreateMap(Path);
+}
+
+Vector2 LevelManager::GetPlayerPosition()
+{
+    return Map->GetPlayerPositionOnMap();
 }

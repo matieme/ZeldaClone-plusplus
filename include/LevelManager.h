@@ -9,7 +9,8 @@ public:
     void Update();
     std::vector<Rectangle> GetCollidersRec();
     std::vector<GateData> GetGateCollidersRec();
-    void OnGateCollision();
+    void OnGateCollision(const char* MapID);
+    Vector2 GetPlayerPosition();
 
 private:
     MapHandler *Map;

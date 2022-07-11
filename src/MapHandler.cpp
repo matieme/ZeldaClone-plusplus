@@ -7,6 +7,11 @@ const int MAP_OFFSET = 100;
 
 MapHandler::MapHandler(std::string file) 
 {
+    CreateMap(file);
+}
+
+void MapHandler::CreateMap(std::string file)
+{
     tson::Tileson parser;
     map = parser.parse(fs::path(file));
 
@@ -28,7 +33,6 @@ MapHandler::MapHandler(std::string file)
         
         GenerateColliders();
     }
-
 }
 
 void MapHandler::DrawMap() 
@@ -115,4 +119,21 @@ std::vector<GateData> MapHandler::GetGatesColliderRec()
     return CollidersGatesRecs;
 }
 
+void MapHandler::DestroyMapColliders()
+{
+    CollidersRecs.clear();
+    CollidersGatesRecs.clear();
+}
+
+Vector2 MapHandler::GetPlayerPositionOnMap()
+{
+    auto playerLayer = map.getLayer("Player");
+    for (auto player : playerLayer->getObjects())
+    {
+        Vector2 playerPos{ player.getPosition().x,  player.getPosition().y + MAP_OFFSET};
+        return playerPos;
+    }
+
+    return Vector2{0,0};
+}
 

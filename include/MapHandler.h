@@ -15,6 +15,7 @@ public:
     void CreateMap(std::string file);
     void DestroyMapColliders();
     Vector2 GetPlayerPositionOnMap();
+    Texture2D GetCurrentMapTexture();
 
 private:
     tson::Map map;

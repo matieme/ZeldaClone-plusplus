@@ -188,7 +188,7 @@ void Player::CheckGateMapColliders()
     {
         if(CheckCollisionRecs(rect.rec, LinkRectCollider))
         {
-            LevelManagerInstance.OnGateCollision(rect.gateID);
+            LevelManagerInstance.OnGateCollision(rect);
             linkPos = LevelManagerInstance.GetPlayerPosition();
         }
     }

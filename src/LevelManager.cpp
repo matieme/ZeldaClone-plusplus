@@ -29,17 +29,39 @@ std::vector<GateData> LevelManager::GetGateCollidersRec()
     return Map->GetGatesColliderRec();
 }
 
-void LevelManager::OnGateCollision(const char* MapID)
+void LevelManager::OnGateCollision(GateData Data)
 {
     std::string Path = "src/resources/maps/";
-    Path.append(MapID);
+    Path.append(Data.gateID);
     Path.append(".json");
 
-    Map->DestroyMapColliders();
-    Map->CreateMap(Path);
+    if(Data.MapType == "Cave")
+    {
+        CaveTransition(Path);
+    }
+    else
+    {
+        Map->CreateMap(Path);
+    }
+
 }
 
 Vector2 LevelManager::GetPlayerPosition()
 {
     return Map->GetPlayerPositionOnMap();
+}
+
+void LevelManager::CaveTransition(std::string Path)
+{
+    Transition caveTransition = Transition(0.7f);
+
+    //Make the black transition here
+
+    while (caveTransition.TransitionInProgress())
+    {
+        caveTransition.OnUpdate();
+    }
+
+    Map->DestroyMapColliders();
+    Map->CreateMap(Path);
 }

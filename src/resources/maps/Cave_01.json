@@ -108,6 +108,12 @@
                  "id":9,
                  "name":"Map_01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"MapType",
+                         "type":"string",
+                         "value":"Cave"
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,

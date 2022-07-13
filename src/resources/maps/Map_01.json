@@ -390,9 +390,9 @@
                  "name":"Cave_01",
                  "properties":[
                         {
-                         "name":"GateID",
+                         "name":"MapType",
                          "type":"string",
-                         "value":"Cave_01"
+                         "value":"Cave"
                         }],
                  "rotation":0,
                  "type":"",

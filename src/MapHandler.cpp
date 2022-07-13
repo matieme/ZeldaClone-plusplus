@@ -91,10 +91,13 @@ void MapHandler::GenerateColliders()
     auto gates = map.getLayer("Gates");
     for(auto &gate : gates->getObjects())
     {
+        std::string MapType = gate.getProperties().getValue<std::string>("MapType");
+
         GateData data
         {
             {gate.getPosition().x, gate.getPosition().y + MAP_OFFSET, gate.getSize().x, gate.getSize().y},
-            gate.getName().c_str()
+            gate.getName().c_str(),
+            MapType
         };
 
         CollidersGatesRecs.push_back(data);
@@ -135,5 +138,11 @@ Vector2 MapHandler::GetPlayerPositionOnMap()
     }
 
     return Vector2{0,0};
+}
+
+
+Texture2D MapHandler::GetCurrentMapTexture()
+{
+    return map_tex;
 }
 
